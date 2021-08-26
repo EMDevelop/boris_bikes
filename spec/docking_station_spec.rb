@@ -16,45 +16,48 @@ describe DockingStation do
     end
     # Does the same as the above
     # it { is_expected.to respond_to(:dock).with(1).argument} 
-  
+
+  end
+
+  context '#dock' do
+
+    it "it doesn't allow a bike to be docked if there is already a bike" do
+      subject.bike = Bike.new
+      expect {subject.dock(Bike.new)}.to raise_error
+    end
+
+
   end
 
 
 
   context '#release_bike' do 
 
-    let(:bike) { subject.release_bike }
-    before do 
-      subject.bike = Bike.new
-    end
+    let(:bike_example) { Bike.new}
+
+    # before do 
+    #   subject.bike = Bike.new
+    # end
 
     it 'Bike is created when release_bike called and check bike working' do
-      expect(bike.working?).to eq true
+      expect(bike_example.working?).to eq true
     end
 
 
     it 'docks something' do
-      bike = Bike.new
-      expect(subject.dock(bike)).to eq bike
+      subject.bike = nil
+      subject.dock(bike_example)
+      expect(subject.bike).to be_instance_of(Bike)
     end
 
     it 'returns docked bikes' do
-      bike = Bike.new
-      subject.dock(bike)
-      expect(subject.bike).to eq bike
+      subject.bike = nil
+      subject.dock(bike_example)
+      expect(subject.bike).to be_instance_of(Bike)
     end
 
-  # Test that
-  # When no bikes exist and release_bike is called
-  # Exception is raised
-
-    
-  end
-
-  context "thing" do
-    
     it 'Raises an error when a bike is released when there are no bikes in dock' do
-      # subject.dock(nil)
+      subject.bike = nil
       expect {subject.release_bike}.to raise_error
     end
 
