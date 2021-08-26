@@ -22,7 +22,7 @@ describe DockingStation do
   context '#dock' do
 
     it "it doesn't allow a bike to be docked if there is already a bike" do
-      subject.bike = Bike.new
+      subject.bikes = Bike.new
       expect {subject.dock(Bike.new)}.to raise_error
     end
 
@@ -44,20 +44,13 @@ describe DockingStation do
     end
 
 
-    it 'docks something' do
-      subject.bike = nil
-      subject.dock(bike_example)
-      expect(subject.bike).to be_instance_of(Bike)
-    end
-
     it 'returns docked bikes' do
-      subject.bike = nil
       subject.dock(bike_example)
-      expect(subject.bike).to be_instance_of(Bike)
+      expect(subject.bikes.length).to be > 0
     end
 
     it 'Raises an error when a bike is released when there are no bikes in dock' do
-      subject.bike = nil
+      subject.bikes = nil
       expect {subject.release_bike}.to raise_error
     end
 
