@@ -1,10 +1,14 @@
 require './lib/bike.rb'
 
 class DockingStation
-  attr_reader :bike
+  attr_accessor :bike
+
+  def initialize 
+    @bike = nil
+  end
 
   def release_bike
-    Bike.new
+    bike ? Bike.new : (raise "No Bikes in the dock mate")
   end
 
    def dock(bike)
